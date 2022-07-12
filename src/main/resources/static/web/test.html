@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <title>我的收藏夹</title>
+    <script type="text/javascript" src="../bootstrap3/cos-js-sdk-v5.min.js"></script>
+    <script type="text/javascript">
+        //获取当前时间的字符串
+        function GetTimeString() {
+            var date = new Date();
+            var yy = date.getFullYear().toString();
+            var mm = (date.getMonth() + 1).toString();
+            var dd = date.getDate().toString();
+            var hh = date.getHours().toString();
+            var nn = date.getMinutes().toString();
+            var ss = date.getSeconds().toString();
+            var mi = date.getMilliseconds().toString();
+
+            var ret = yy + mm + dd + hh + nn + ss + mi;
+            return ret;
+        }
+        //实例化COS对象
+        var cos = new COS({
+            SecretId: 'AKIDIOHvKTN1QZS5TbVAalgNp1yhAOM4XkhO', //密钥id
+            SecretKey: 'UCj2kHafV8WgbJm11nLejammX3KL7duv'//密钥的key
+        });
+        //点击上传按钮上传文件到腾讯云
+        function uploadCos() {
+            var file = document.getElementById('file').files[0];
+            cos.putObject({
+                Bucket: 'kang-agricultural-1253599123', // 桶名-APPID  必须
+                Region: 'ap-beijing', //区域 必须
+                Key: GetTimeString() + '.png', //文件名必须
+                StorageClass: 'STANDARD',
+                Body: file, // 上传文件对象
+                onProgress: function (progressData) {
+                    console.log(JSON.stringify(progressData));//上传成功的返回值
+                }
+            }, function (err, data) {
+                console.log(err || data);//上传失败的返回值
+            });
+
+        }
+    </script>
+</head>
+<!--<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+请选择文件:<input type="file" id="file" value=""/>
+<input type="button" value="上传" onclick="uploadCos()"/>-->
+
+
+<form id="form-change-avatar" class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-md-2 control-label">选择头像:</label>
+        <div class="col-md-5">
+            <img id="img-avatar" src="../images/index/user.jpg" class="img-responsive" />
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-md-offset-2 col-md-4">
+            <input id="file" type="file" name="file">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input id="btn-change-avatar" type="button" onclick="uploadCos()" class="btn btn-primary" value="上传"  />
+        </div>
+    </div>
+</form>
+
+</body>
+</html>

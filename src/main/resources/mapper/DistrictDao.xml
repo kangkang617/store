@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kangkang.store.dao.DistrictDao">
+<!--    数据表的字段和类的字段不一致需要定义resultMap
+        id是返回的唯一值，表示映射关系的结果
+        type是指定与Java中的那个实体类进行映射
+-->
+    <select id="findByParent" resultType="com.kangkang.store.entity.District">
+        SELECT
+            *
+        FROM
+            t_dict_district
+        WHERE
+            parent=#{parent}
+        ORDER BY
+            code ASC
+    </select>
+
+    <select id="getNameByCode" resultType="java.lang.String">
+        SELECT
+    	name
+    FROM
+    	t_dict_district
+    WHERE
+    	code=#{code}
+    </select>
+</mapper>
