@@ -33,9 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect("/web/login.html");
             return false;
 
-//            更改一下
-
-
+//            更改2下
         }
 
         return true;
