@@ -32,6 +32,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (uid == null){
             response.sendRedirect("/web/login.html");
             return false;
+
+//            更改一下
         }
 
         return true;
